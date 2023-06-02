@@ -45,8 +45,6 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Log value
-        uses: echo ${{ steps.example_job.outputs.my_output }}
       - name: Checkout Repository
         uses: actions/checkout@v2
       - name: Publish artifact
