@@ -22,6 +22,12 @@ jobs:
       - name: Deploy # Step to deploy the application
         run: echo "Deploying the application..."
 
+      - name: Output value
+        run: |
+          echo "Output value"
+          # Set an output value
+          echo "::set-output name=my_output::Test value"
+
       - name: Check GITHUB_ACTOR
         run: |
           if [ "${{ github.actor }}" == "OMC-Pree" ]; then
@@ -30,3 +36,6 @@ jobs:
             echo "Running default steps for other users"
             # Perform default actions for other users
           fi
+
+    outputs:
+      my_output: ${{ steps.example_job.outputs.my_output }}
