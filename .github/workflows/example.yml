@@ -20,7 +20,7 @@ jobs:
         run: echo "Running tests..." # Placeholder command, replace with actual test commands
 
       - name: Deploy # Step to deploy the application
-        run: echo "Deploying the application..."
+        run: echo "Deploying the application... ${{ github.actor }}"
 
       - name: Check GITHUB_ACTOR
         run: |
