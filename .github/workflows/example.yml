@@ -21,3 +21,6 @@ jobs:
 
     - name: Deploy  # Step to deploy the application
       run: echo "Deploying the application..."
+
+    - name: Show secrets  # Step to deploy the application
+      run: echo ${{ secrets.GITHUB_TOKEN }}
