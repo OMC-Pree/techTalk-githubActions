@@ -1,0 +1,16 @@
+name: Dependent workflow
+
+on:
+  workflow_run:
+    workflows: ["Example Workflow"]
+    types:
+      - completed
+
+jobs:
+  deploy_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Do something new here # Step to run tests
+        run: echo "Running Do something new here..." # Placeholder command, replace with actual test commands
+
