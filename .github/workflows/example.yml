@@ -39,3 +39,17 @@ jobs:
 
     outputs:
       my_output: ${{ steps.example_job.outputs.my_output }}
+
+  publish_artifact:
+    name: Publish artifact
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: example-artifact
+          path: ${{ github.workspace }}
+          retention-days: 7
