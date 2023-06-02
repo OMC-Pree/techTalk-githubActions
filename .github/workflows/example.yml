@@ -1,41 +1,43 @@
-name: Example Workflow # The name of the workflow
-
+name: Example Workflow
 on:
   push:
     branches:
-      - main # Trigger the workflow on pushes to the main branch
-
+      - main
 jobs:
   build:
-    runs-on: ubuntu-latest # Specify the runner for this job
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository # Step to check out the repository
-        uses: actions/checkout@v2 # Using the actions/checkout action to fetch repository contents
-
-      - name: Build # Step to build the project
-        run: echo "Building the project..." # Placeholder command, replace with actual build commands
-
-      - name: Test # Step to run tests
-        run: echo "Running tests..." # Placeholder command, replace with actual test commands
-
-      - name: Deploy # Step to deploy the application
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Build
+        run: echo "Building the project..."
+      - name: Test
+        run: echo "Running tests..."
+      - name: Deploy
         run: echo "Deploying the application..."
-
       - name: Output value
         run: |
           echo "Output value"
-          # Set an output value
           echo "::set-output name=my_output::Test value"
-
       - name: Check GITHUB_ACTOR
         run: |
           if [ "${{ github.actor }}" == "OMC-Pree" ]; then
             echo "Running steps for Pree"
           else
             echo "Running default steps for other users"
-            # Perform default actions for other users
-          fi
-
     outputs:
-      my_output: ${{ steps.example_job.outputs.my_output }}
+      my_output: ${{ steps.build.outputs.my_output }}
+
+  publish_artifact:
+    name: Publish artifact
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: Publish artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: example-artifact
+          path: ${{ github.workspace }}
+          retention-days: 7
