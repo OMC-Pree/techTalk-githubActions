@@ -9,10 +9,6 @@ on:
       versionBump:
         description: "Version bump type (major, minor, patch)"
         required: true
-      defaultBranch:
-        description: "Default branch to bump version on"
-        default: "develop"
-        required: false
 
 jobs:
   bump-version:
@@ -29,11 +25,12 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Bump version and push
+      - name: Log version bump and push commands
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git checkout ${{ github.event.inputs.defaultBranch }}
-          git pull origin ${{ github.event.inputs.defaultBranch }}
-          yarn workspace ${{ github.event.inputs.appName }} version --${{ github.event.inputs.versionBump }}
-          git push
+          echo "Would run with the following values:"
+          echo "git pull origin ${{ github.event.inputs.defaultBranch }}"
+          # git pull origin ${{ github.event.inputs.defaultBranch }}
+          echo "${{ github.event.inputs.appName }} version --${{ github.event.inputs.versionBump }}"
+          # yarn workspace ${{ github.event.inputs.appName }} version --${{ github.event.inputs.versionBump }}
+          echo "git push"
+          # git push
