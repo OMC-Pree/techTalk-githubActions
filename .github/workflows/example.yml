@@ -3,7 +3,7 @@ name: Example Workflow # The name of the workflow
 on:
   push:
     branches:
-      - main # Trigger the workflow on pushes to the main branch
+      - test # Trigger the workflow on pushes to the main branch
 
 jobs:
   build:

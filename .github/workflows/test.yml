@@ -1,0 +1,39 @@
+name: Test bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      appName:
+        description: "App name"
+        required: true
+      versionBump:
+        description: "Version bump type (major, minor, patch)"
+        required: true
+      defaultBranch:
+        description: "Default branch to bump version on"
+        default: "develop"
+        required: false
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Bump version and push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git checkout ${{ github.event.inputs.defaultBranch }}
+          git pull origin ${{ github.event.inputs.defaultBranch }}
+          yarn workspace ${{ github.event.inputs.appName }} version --${{ github.event.inputs.versionBump }}
+          git push
